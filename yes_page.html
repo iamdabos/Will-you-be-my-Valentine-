@@ -5,6 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knew you would say yes!</title>
     <link rel="stylesheet" href="./yes_style.css">
+    <style>
+        .note-button {
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .note-button:hover {
+            background-color: #ff1493;
+            transform: scale(1.05);
+        }
+        
+        .note-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff3e0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .note-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .note-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -12,6 +59,42 @@
         <div class="gif_container">
             <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif">
         </div>
+        
+        <button class="note-button" onclick="toggleNote()">Read My Note 💌</button>
+        
+        <div class="note-container" id="noteContainer">
+            <p class="note-text">
+                Write your special message here! This could be anything you want to say - 
+                a sweet message, plans for your date, or just how excited you are! 💕
+            </p>
+        </div>
+        
+        <!-- Background Music -->
+        <audio id="bgMusic" loop>
+            <source src="your-music-file.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
     </div>
+    
+    <script>
+        // Toggle note visibility
+        function toggleNote() {
+            const noteContainer = document.getElementById('noteContainer');
+            noteContainer.classList.toggle('show');
+        }
+        
+        // Auto-play music (with user interaction fallback due to browser policies)
+        window.addEventListener('load', function() {
+            const music = document.getElementById('bgMusic');
+            
+            // Try to autoplay
+            music.play().catch(function() {
+                // If autoplay fails, play on first user interaction
+                document.body.addEventListener('click', function() {
+                    music.play();
+                }, { once: true });
+            });
+        });
+    </script>
 </body>
 </html>
